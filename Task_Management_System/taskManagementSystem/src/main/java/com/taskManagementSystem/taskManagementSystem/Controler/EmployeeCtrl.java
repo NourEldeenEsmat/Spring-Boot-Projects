@@ -46,13 +46,4 @@ public class EmployeeCtrl {
             return new ResponseEntity("something went wrong..."+e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("/get_task_comments/{id}")
-    public ResponseEntity<?> getComments(@PathVariable Long id){
-        try {
-            List<CommentDto> comments =employeeServices.getComments(id);
-            return ResponseEntity.ok(comments);
-        }catch (Error e){
-            return new ResponseEntity("something went wrong..."+e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
 }

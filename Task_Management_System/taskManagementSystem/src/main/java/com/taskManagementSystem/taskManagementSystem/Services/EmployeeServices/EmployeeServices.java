@@ -12,5 +12,4 @@ public interface EmployeeServices {
     List<TaskDto> getEmployeeTasks(Long userId);
     Status changeStatus (Long taskId,Status newStatus);
     TaskDto viewTask(Long taskId);
-    List<CommentDto> getComments(Long taskId);
 }

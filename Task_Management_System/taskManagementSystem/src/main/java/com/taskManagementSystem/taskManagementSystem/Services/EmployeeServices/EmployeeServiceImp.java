@@ -44,13 +44,4 @@ public class EmployeeServiceImp implements EmployeeServices {
         Optional<Task> task = taskRepo.findById(taskId);
         return task.get().taskToDto();
     }
-
-    @Override
-    public List<CommentDto> getComments(Long taskId) {
-        Optional<Task> task = taskRepo.findById(taskId);
-        List<TasksComments> comments = commentRepo.findAllByTask(task.get());
-        return comments.stream().map(TasksComments::toDto).toList();
-    }
-
-
 }

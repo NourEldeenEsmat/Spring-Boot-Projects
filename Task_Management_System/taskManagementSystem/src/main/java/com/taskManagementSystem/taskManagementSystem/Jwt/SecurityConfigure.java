@@ -44,7 +44,7 @@ public class SecurityConfigure {
                 "/edit_task","/view_task/{id}","/get_task_comments/{taskId}",
                 "/add_comment","/get_employee_tasks/{userId}",
                 "/change_status/{taskId}/{newStatus}",
-                "/get_task_details/{id}","/get_task_comments/{id}"
+                "/get_task_details/{id}"
         ).permitAll().anyRequest().authenticated();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

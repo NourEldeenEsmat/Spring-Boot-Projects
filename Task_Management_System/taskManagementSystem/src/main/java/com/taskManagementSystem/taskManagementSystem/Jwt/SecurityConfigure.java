@@ -42,7 +42,9 @@ public class SecurityConfigure {
                 "/signup","/signIn","/add_task",
                 "/get_admin_tasks/{id}","/delete_task/{id}",
                 "/edit_task","/view_task/{id}","/get_task_comments/{taskId}",
-                "/add_comment","/get_employee_tasks/{userId}"
+                "/add_comment","/get_employee_tasks/{userId}",
+                "/change_status/{taskId}/{newStatus}",
+                "/get_task_details/{id}","/get_task_comments/{id}"
         ).permitAll().anyRequest().authenticated();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

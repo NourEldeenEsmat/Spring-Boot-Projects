@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface EmployeeServices {
     List<TaskDto> getEmployeeTasks(Long userId);
-    Status changeStatus (TaskDto taskDto,Status newStatus);
+    Status changeStatus (Long taskId,Status newStatus);
     TaskDto viewTask(Long taskId);
     List<CommentDto> getComments(Long taskId);
 }

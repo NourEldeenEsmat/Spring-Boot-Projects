@@ -23,6 +23,7 @@ public class EmployeeServiceImp implements EmployeeServices {
     private AuthRepo authRepo;
     @Autowired
     private CommentRepo commentRepo;
+
     @Override
     public List<TaskDto> getEmployeeTasks(Long userId) {
         Optional<User> user = authRepo.findById(userId);
@@ -31,10 +32,11 @@ public class EmployeeServiceImp implements EmployeeServices {
     }
 
     @Override
-    public Status changeStatus(TaskDto taskDto, Status newStatus) {
-        taskDto.setStatus(newStatus);
-        Task task = taskRepo.save(taskDto.toTask());
-        return task.taskToDto().getStatus();
+    public Status changeStatus(Long taskId, Status newStatus) {
+        Optional<Task> task = taskRepo.findById(taskId);
+        task.get().setStatus(newStatus);
+        Task savedTask = taskRepo.save(task.get());
+        return savedTask.taskToDto().getStatus();
     }
 
     @Override
@@ -46,7 +48,7 @@ public class EmployeeServiceImp implements EmployeeServices {
     @Override
     public List<CommentDto> getComments(Long taskId) {
         Optional<Task> task = taskRepo.findById(taskId);
-       List<TasksComments> comments = commentRepo.findAllByTask(task.get());
+        List<TasksComments> comments = commentRepo.findAllByTask(task.get());
         return comments.stream().map(TasksComments::toDto).toList();
     }
 

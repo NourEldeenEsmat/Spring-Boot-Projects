@@ -14,8 +14,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class AuthCtrl {
@@ -45,6 +46,33 @@ public class AuthCtrl {
 
         @PostMapping("/create_account")
     public ResponseEntity<?> createAccount(@RequestBody UserDto userDto) {
+        try {
+            UserDto dto = authServices.createUser(userDto);
+            return ResponseEntity.ok(dto);
+        } catch (RuntimeException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    @GetMapping("/get_all_users")
+    public ResponseEntity<?> getAllUsers(){
+        try {
+            List<UserDto> userDos = authServices.getAllUsers();
+            return ResponseEntity.ok(userDos);
+        } catch (RuntimeException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    @DeleteMapping("/delete_user/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long userId){
+        try {
+            authServices.deleteUser(userId);
+            return ResponseEntity.ok("deleted");
+        } catch (RuntimeException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    @PutMapping("/update_user")
+    public ResponseEntity<?> updateUser(@RequestBody UserDto userDto){
         try {
             UserDto dto = authServices.createUser(userDto);
             return ResponseEntity.ok(dto);

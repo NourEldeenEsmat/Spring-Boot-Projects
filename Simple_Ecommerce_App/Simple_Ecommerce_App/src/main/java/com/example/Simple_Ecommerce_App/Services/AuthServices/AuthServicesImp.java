@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AuthServicesImp implements AuthServices {
     @Autowired
@@ -25,4 +27,17 @@ public class AuthServicesImp implements AuthServices {
        User user = userRepo.findByUserName(userName);
         return user.toDto();
     }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        List<User> userList = userRepo.findAll();
+        return userList.stream().map(User::toDto).toList();
+    }
+
+    @Override
+    public void deleteUser(Long userId) {
+        userRepo.deleteById(userId);
+    }
+
+
 }

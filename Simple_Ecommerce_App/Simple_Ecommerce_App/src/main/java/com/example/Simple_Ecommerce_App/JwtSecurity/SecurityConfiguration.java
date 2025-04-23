@@ -30,13 +30,20 @@ public class SecurityConfiguration {
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(customUserDetails);
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().requestMatchers("/create_account","/login").permitAll()
+        http.csrf().disable().authorizeRequests().requestMatchers(
+                "/create_account", "/login", "/create_product",
+                        "/create_reservation","/update_user","/delete_user/{userId}",
+                        "/get_all_users","/get_all_products/{productId}","/update_product",
+                        "/delete_product/{productId}","/view_product/{productId}"
+                ).permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

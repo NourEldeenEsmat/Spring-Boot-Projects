@@ -1,5 +1,4 @@
 package com.example.Simple_Ecommerce_App.Services.AuthServices;
-
 import com.example.Simple_Ecommerce_App.Dtos.UserDto;
 import com.example.Simple_Ecommerce_App.Entities.User;
 import com.example.Simple_Ecommerce_App.Repositries.UserRepo;

@@ -8,8 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Data
 public class UserDto {
-    @Autowired
-    PasswordEncoder encoder;
+
     private Long userId;
     private String userName;
     private String email;
@@ -21,7 +20,7 @@ public class UserDto {
         user.setUserName(userName);
         user.setUserRole(userRole);
         user.setEmail(email);
-        user.setPassword(encoder.encode(password));
+        user.setPassword(password);
         user.setUserId(userId);
         return user;
     }

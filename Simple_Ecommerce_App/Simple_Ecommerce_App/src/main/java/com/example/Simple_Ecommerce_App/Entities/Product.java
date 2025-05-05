@@ -6,6 +6,8 @@ import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.List;
+
 @Entity
 @Table(name = "products")
 @Data
@@ -18,10 +20,9 @@ public class Product {
     private int productStock;
     private Double productPrice;
 
-    private boolean isReserved;
     @ManyToOne
-    @JoinColumn(name = "adminId")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private User admin;
     public ProductDto toDto(){
         ProductDto productDto = new ProductDto();
@@ -30,8 +31,7 @@ public class Product {
         productDto.setProductPrice(productPrice);
         productDto.setProductId(productId);
         productDto.setProductStock(productStock);
-        productDto.setAdminId(admin.getUserId());
-        productDto.setReserved(isReserved);
+        productDto.setAdmin(admin);
         return productDto;
     }
 }

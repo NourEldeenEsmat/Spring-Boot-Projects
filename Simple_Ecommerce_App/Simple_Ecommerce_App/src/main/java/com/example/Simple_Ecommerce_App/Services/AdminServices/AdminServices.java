@@ -9,4 +9,6 @@ public interface AdminServices {
     void deleteProduct(Long productId);
     List<ProductDto> getAllProducts(Long adminId);
     ProductDto viewProduct(Long productId);
+
+    List<ProductDto> searchProduct(String pName,Double price);
 }

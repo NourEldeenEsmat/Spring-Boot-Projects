@@ -39,5 +39,10 @@ public class AuthServicesImp implements AuthServices {
         userRepo.deleteById(userId);
     }
 
+    @Override
+    public UserDto getUserById(Long id) {
+        return userRepo.findById(id).get().toDto();
+    }
+
 
 }

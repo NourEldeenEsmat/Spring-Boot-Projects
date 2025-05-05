@@ -43,6 +43,7 @@ public class SecurityConfiguration {
                         "/create_reservation","/update_user","/delete_user/{userId}",
                         "/get_all_users","/get_all_products/{productId}","/update_product",
                         "/delete_product/{productId}","/view_product/{productId}"
+                ,"/get-reservations-by-user-id/{id}","search-products"
                 ).permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

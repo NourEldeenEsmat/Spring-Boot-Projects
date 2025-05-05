@@ -10,4 +10,7 @@ import java.util.List;
 @Repository
 public interface ProductRepo extends JpaRepository<Product,Long> {
    List<Product> findAllByAdmin(User admin);
+
+   List<Product> findAllByProductNameContainsAndProductPrice(String pName,Double price);
+
 }

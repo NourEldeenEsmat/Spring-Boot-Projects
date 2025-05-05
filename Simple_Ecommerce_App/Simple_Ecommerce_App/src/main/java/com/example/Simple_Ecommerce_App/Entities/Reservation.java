@@ -1,6 +1,7 @@
 package com.example.Simple_Ecommerce_App.Entities;
 
 import com.example.Simple_Ecommerce_App.Dtos.ReservationDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -25,9 +26,9 @@ public class Reservation {
     public ReservationDto toDto(){
         ReservationDto reservationDto = new ReservationDto();
         reservationDto.setReservationId(reservationId);
-        reservationDto.setProductId(product.getProductId());
+        reservationDto.setProduct(product);
         reservationDto.setReservationNumber(reservationNumber);
-        reservationDto.setUserId(user.getUserId());
+        reservationDto.setUser(user);
         return reservationDto;
     }
 }

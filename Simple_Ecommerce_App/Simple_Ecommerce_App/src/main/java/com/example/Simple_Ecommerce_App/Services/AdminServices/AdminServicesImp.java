@@ -4,8 +4,7 @@ import com.example.Simple_Ecommerce_App.Dtos.ProductDto;
 import com.example.Simple_Ecommerce_App.Entities.Product;
 import com.example.Simple_Ecommerce_App.Entities.User;
 import com.example.Simple_Ecommerce_App.Repositries.ProductRepo;
-import com.example.Simple_Ecommerce_App.Repositries.ReservationRepo;
-import com.example.Simple_Ecommerce_App.Repositries.UserRepo;
+import com.example.Simple_Ecommerce_App.Services.AuthServices.AuthServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +15,10 @@ public class AdminServicesImp implements AdminServices {
     @Autowired
     ProductRepo productRepo;
     @Autowired
-    UserRepo userRepo;
-    @Autowired
-    ReservationRepo reservationRepo;
+    AuthServices authServices;
     @Override
     public ProductDto createProduct(ProductDto productDto) {
-        Optional<User> admin = userRepo.findById(productDto.getAdminId());
-        Product product = productDto.toProduct();
-        product.setAdmin(admin.get());
-        Product product1 = productRepo.save(product);
+        Product product1 = productRepo.save(productDto.toProduct());
         return product1.toDto();
     }
 
@@ -35,8 +29,8 @@ public class AdminServicesImp implements AdminServices {
 
     @Override
     public List<ProductDto> getAllProducts(Long adminId) {
-        Optional<User> admin = userRepo.findById(adminId);
-        List<Product> products = productRepo.findAllByAdmin(admin.get());
+        User admin = authServices.getUserById(adminId).toUser();
+        List<Product> products = productRepo.findAllByAdmin(admin);
         return products.stream().map(Product::toDto).toList();
     }
 
@@ -44,5 +38,11 @@ public class AdminServicesImp implements AdminServices {
     public ProductDto viewProduct(Long productId) {
         Optional<Product> product = productRepo.findById(productId);
         return product.get().toDto();
+    }
+
+    @Override
+    public List<ProductDto> searchProduct(String pName, Double price) {
+        return productRepo.findAllByProductNameContainsAndProductPrice(pName,price)
+                .stream().map(Product::toDto).toList();
     }
 }

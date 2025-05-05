@@ -1,7 +1,11 @@
 package com.example.Simple_Ecommerce_App.Dtos;
 
 import com.example.Simple_Ecommerce_App.Entities.Product;
+import com.example.Simple_Ecommerce_App.Entities.Reservation;
+import com.example.Simple_Ecommerce_App.Entities.User;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class ProductDto {
@@ -10,8 +14,7 @@ public class ProductDto {
     private String productDescription;
     private int productStock;
     private Double productPrice;
-    private boolean isReserved;
-    private Long adminId;
+    private User admin;
 
     public Product toProduct() {
         Product product = new Product();
@@ -20,7 +23,7 @@ public class ProductDto {
         product.setProductPrice(productPrice);
         product.setProductId(productId);
         product.setProductStock(productStock);
-        product.setReserved(isReserved);
+        product.setAdmin(admin);
         return product;
     }
 }

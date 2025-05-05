@@ -10,4 +10,6 @@ public interface AuthServices {
     List<UserDto> getAllUsers();
     void deleteUser(Long userId);
 
+    UserDto getUserById(Long id);
+
 }

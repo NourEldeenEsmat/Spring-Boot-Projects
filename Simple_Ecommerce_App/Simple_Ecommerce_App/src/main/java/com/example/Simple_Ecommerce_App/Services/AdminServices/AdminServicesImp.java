@@ -3,6 +3,7 @@ package com.example.Simple_Ecommerce_App.Services.AdminServices;
 import com.example.Simple_Ecommerce_App.Dtos.ProductDto;
 import com.example.Simple_Ecommerce_App.Entities.Product;
 import com.example.Simple_Ecommerce_App.Entities.User;
+import com.example.Simple_Ecommerce_App.Errors.RecordNotFoundException;
 import com.example.Simple_Ecommerce_App.Repositries.ProductRepo;
 import com.example.Simple_Ecommerce_App.Services.AuthServices.AuthServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,11 @@ public class AdminServicesImp implements AdminServices {
     @Override
     public ProductDto viewProduct(Long productId) {
         Optional<Product> product = productRepo.findById(productId);
-        return product.get().toDto();
+        if(product.isPresent()){
+            return product.get().toDto();
+        }else {
+            throw new RecordNotFoundException("not found");
+        }
     }
 
     @Override

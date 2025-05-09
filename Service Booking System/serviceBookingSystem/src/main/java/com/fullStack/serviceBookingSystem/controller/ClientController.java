@@ -1,8 +1,7 @@
 package com.fullStack.serviceBookingSystem.controller;
 
-import com.fullStack.serviceBookingSystem.dto.AddDto;
+import com.fullStack.serviceBookingSystem.dto.AdDto;
 import com.fullStack.serviceBookingSystem.dto.ReserveDto;
-import com.fullStack.serviceBookingSystem.entity.Reservation;
 import com.fullStack.serviceBookingSystem.enums.ReserveStates;
 import com.fullStack.serviceBookingSystem.services.company.CompanyServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ public class ClientController {
 
     @PostMapping("create_adds/{id}")
     public ResponseEntity<?> createAdd(@PathVariable Long id,
-                                       @ModelAttribute AddDto addDto,
+                                       @ModelAttribute AdDto addDto,
                                        @RequestParam("pic") MultipartFile image) {
         byte[] imageBytes = new byte[0];
         try {

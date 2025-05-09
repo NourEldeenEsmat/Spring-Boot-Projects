@@ -1,11 +1,9 @@
 package com.fullStack.serviceBookingSystem.dto;
 
-import com.fullStack.serviceBookingSystem.entity.User;
-import lombok.Builder;
 import lombok.Data;
+
 @Data
-@Builder
-public class AddDto {
+public class AdDto {
     private Long id;
 
     private String serviceName;
@@ -18,7 +16,7 @@ public class AddDto {
 
     private Long userId;
 
-    private String companyName;
+	private String companyName;
 
     private boolean isReserved;
 }

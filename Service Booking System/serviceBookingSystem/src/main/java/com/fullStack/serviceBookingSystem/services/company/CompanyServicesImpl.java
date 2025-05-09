@@ -1,9 +1,9 @@
 package com.fullStack.serviceBookingSystem.services.company;
 
-import com.fullStack.serviceBookingSystem.dto.AddDto;
+import com.fullStack.serviceBookingSystem.dto.AdDto;
 import com.fullStack.serviceBookingSystem.dto.ReserveDto;
 import com.fullStack.serviceBookingSystem.dto.UserDto;
-import com.fullStack.serviceBookingSystem.entity.Adds;
+import com.fullStack.serviceBookingSystem.entity.Ads;
 import com.fullStack.serviceBookingSystem.entity.Reservation;
 import com.fullStack.serviceBookingSystem.entity.User;
 import com.fullStack.serviceBookingSystem.enums.ReserveStates;
@@ -28,10 +28,10 @@ public class CompanyServicesImpl implements CompanyServices {
     @Autowired
     private ReservationRepo reservationRepo;
 
-    public boolean adds(Long userId, AddDto addDto, byte[] image) {
+    public boolean adds(Long userId, AdDto addDto, byte[] image) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
-            Adds add = new Adds();
+            Ads add = new Ads();
             add.setImage(image);
             add.setPrice(addDto.getPrice());
             add.setServiceName(addDto.getServiceName());
@@ -43,15 +43,15 @@ public class CompanyServicesImpl implements CompanyServices {
         return false;
     }
 
-    public List<AddDto> addDtoList() {
-        List<Adds> adds = addRepo.findByisReserved(false);
-        return adds.stream().map(add -> add.addDto(add))
+    public List<AdDto> addDtoList() {
+        List<Ads> adds = addRepo.findByisReserved(false);
+        return adds.stream().map(add -> add.addDto())
                 .collect(Collectors.toList());
     }
 
-    public List<AddDto> companyAddsList(Long id) {
-        List<Adds> adds = addRepo.findByUserId(id);
-        return adds.stream().map(add -> add.addDto(add))
+    public List<AdDto> companyAddsList(Long id) {
+        List<Ads> adds = addRepo.findByUserId(id);
+        return adds.stream().map(add -> add.addDto())
                 .collect(Collectors.toList());
     }
 
@@ -64,18 +64,9 @@ public class CompanyServicesImpl implements CompanyServices {
         }
     }
 
-    public AddDto selectedAd(Long adId) {
-        Optional<Adds> add = addRepo.findById(adId);
-        return AddDto.builder()
-                .price(add.get().getPrice())
-                .serviceName(add.get().getServiceName())
-                .serviceDetails(add.get().getServiceDetails())
-                .id(adId)
-                .image(add.get().getImage())
-                .userId(add.get().getUser().getId())
-                .companyName(add.get().getUser().getName())
-                .isReserved(add.get().isReserved())
-                .build();
+    public AdDto selectedAd(Long adId) {
+        Optional<Ads> add = addRepo.findById(adId);
+        return add.get().addDto();
     }
 
     public List<ReserveDto> getAllCompanyReservations(Long id) {
@@ -85,7 +76,7 @@ public class CompanyServicesImpl implements CompanyServices {
 
     public ReserveDto companyAction(Long id, ReserveStates reserveStates) {
         Optional<Reservation> reservation = reservationRepo.findById(id);
-        Optional<Adds> ad = addRepo.findById(reservation.get().getAdds().getAddId());
+        Optional<Ads> ad = addRepo.findById(reservation.get().getAdds().getAddId());
         reservation.get().setState(reserveStates);
         reservationRepo.save(reservation.get());
         if (reserveStates.name().equals("REJECTED")) {
@@ -108,11 +99,11 @@ public class CompanyServicesImpl implements CompanyServices {
     public ReserveDto postReservation(ReserveDto reserveDto) {
         Optional<User> user = userRepository.findById(reserveDto.getUserId());
         Optional<User> company = userRepository.findById(reserveDto.getCompanyId());
-        Optional<Adds> adds = addRepo.findById(reserveDto.getAdId());
+        Optional<Ads> adds = addRepo.findById(reserveDto.getAdId());
         Reservation reservation = new Reservation();
 
         adds.get().setReserved(true);
-        Adds savedAd = addRepo.save(adds.get());
+        Ads savedAd = addRepo.save(adds.get());
 
         reservation.setAdds(savedAd);
         reservation.setUser(user.get());
@@ -125,7 +116,7 @@ public class CompanyServicesImpl implements CompanyServices {
 
     public void deleteReservation(Long id) {
         Optional<Reservation> reservation = reservationRepo.findById(id);
-        Optional<Adds> adds = addRepo.findById(reservation.get().getAdds().getAddId());
+        Optional<Ads> adds = addRepo.findById(reservation.get().getAdds().getAddId());
         adds.get().setReserved(false);
         addRepo.save(adds.get());
         reservationRepo.deleteById(id);

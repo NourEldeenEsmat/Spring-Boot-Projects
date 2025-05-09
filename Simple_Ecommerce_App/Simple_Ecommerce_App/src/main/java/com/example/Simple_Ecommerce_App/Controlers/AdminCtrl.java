@@ -52,12 +52,12 @@ public class AdminCtrl {
     }
     @GetMapping("/view_product/{productId}")
     public ResponseEntity<?> viewProduct(@PathVariable Long productId){
-        try{
+//        try{
             ProductDto productDto = adminServices.viewProduct(productId);
             return ResponseEntity.ok(productDto);
-        }catch (RuntimeException e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+//        }catch (RuntimeException e){
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
     }
 
 }

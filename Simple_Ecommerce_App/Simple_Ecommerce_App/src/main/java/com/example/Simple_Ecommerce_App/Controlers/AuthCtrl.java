@@ -46,12 +46,12 @@ public class AuthCtrl {
 
         @PostMapping("/create_account")
     public ResponseEntity<?> createAccount(@RequestBody UserDto userDto) {
-        try {
+//        try {
             UserDto dto = authServices.createUser(userDto);
             return ResponseEntity.ok(dto);
-        } catch (RuntimeException e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+//        } catch (RuntimeException e) {
+//            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
     }
     @GetMapping("/get_all_users")
     public ResponseEntity<?> getAllUsers(){

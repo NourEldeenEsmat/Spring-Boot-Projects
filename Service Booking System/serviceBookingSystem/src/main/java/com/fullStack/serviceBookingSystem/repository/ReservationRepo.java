@@ -1,6 +1,6 @@
 package com.fullStack.serviceBookingSystem.repository;
 
-import com.fullStack.serviceBookingSystem.entity.Adds;
+import com.fullStack.serviceBookingSystem.entity.Ads;
 import com.fullStack.serviceBookingSystem.entity.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,5 +10,5 @@ import java.util.List;
 public interface ReservationRepo extends JpaRepository<Reservation,Long> {
     List<Reservation> findByCompanyId(Long id);
     List<Reservation> findByUserId(Long id);
-    Reservation findByAdds(Adds ad);
+    Reservation findByAdds(Ads ad);
 }
